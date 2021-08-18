@@ -1,16 +1,15 @@
 {
   "name": "react-native-easyfont",
   "title": "React Native Easyfont",
-  "version": "1.0.0",
-  "description": "Fork of react-native-soundfont with various changes.",
+  "version": "0.0.1",
+  "description": "A fork of react-native-soundfont with latency and API improvements.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fereh/react-native-easyfont.git",
-    "baseUrl": "https://github.com/fereh/react-native-easyfont"
+    "url": "git+https://gitlab.com/fereh/react-native-easyfont.git",
+    "baseUrl": "https://gitlab.com/fereh/react-native-easyfont"
   },
   "keywords": [
     "react-native"
@@ -19,6 +18,12 @@
     "name": "fereh",
     "email": "emailsfor@myself.com"
   },
+  "contributors": [
+    {
+      "name": "Zach Shaver",
+      "email": "zachshaver@gmail.com"
+    }
+  ],
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
@@ -29,5 +34,6 @@
   "devDependencies": {
     "react": "^16.9.0",
     "react-native": "^0.61.5"
-  }
+  },
+  "private": false
 }
