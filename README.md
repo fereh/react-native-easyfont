@@ -30,22 +30,33 @@ You will have to recompile your React Native project, because this module contai
 ### Hello World
 
 ```javascript
-import Easyfont from 'react-native-easyfont';
+import { player, generatePitchList, } from 'react-native-easyfont';
 
-new Easyfont.Player('acoustic_grand_piano').prepare(Easyfont.generatePitchList(4))
-    .then(player => {
-        player.play([ 'c4', 'e4', 'g4', ]);
-        player.play([ 'd4', 'f4', 'a4', ], 2000);
-    });
+player('acoustic_grand_piano').prepare(generatePitchList(4)).then(player => {
+    player.play([ 'c5', 'e5', 'g5', ]);
+    player.play([ 'c5', 'f5', 'a5', ], 1000);
+    player.play([ 'd5', 'f5', 'b5', ], 2000);
+    player.play([ 'c5', 'g5', 'c6', ], 2500);
+});
 ```
 
 ### Lazy loading
 
 ```javascript
-import { Player, generatePitchList } from 'react-native-easyfont';
+import { player, } from 'react-native-easyfont';
 
-const player = new Easyfont.Player('violin');
-// TODO
+const violinPlayer = player('violin');
+
+// Whenever the notes are known:
+const violinReady = violinPlayer.prepare(notes);
+
+// Whenever the notes are to be played:
+violinReady.then(() => {
+    violinPlayer.stop(); // stop player playback
+    violinPlayer.play(note[0]);
+    violinPlayer.play([ note[1], note[2], ], 3000);
+    violinPlayer.play(note[3], 3500);
+}); 
 ```
 
 ## API
