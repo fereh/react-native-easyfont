@@ -1,4 +1,4 @@
-import Instrument from './instrument';
+const Instrument = require('./instrument');
 
 const defaultOptions = Object.freeze({
     duration: 3000,
@@ -21,7 +21,6 @@ class Player {
             : instrument;
 
         this.options = defaultOptions;
-        console.debug(typeof options, options);
         if (typeof options === 'object') {
             this.setOptions(options);
         }
@@ -69,8 +68,6 @@ class Player {
         this.sequence.start(() => {
             this.instrument.play(notes, this.options.speed, this.options.gain, streams => {
                 this.activeStreams.push(streams);
-                console.debug('sequence.stop()', this.options, this.options.duration);
-
                 this.sequence.stop(() => {
                     this.instrument.stop(streams);
                     let i = this.activeStreams.findIndex(x => x === streams[0]);

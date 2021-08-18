@@ -1,5 +1,5 @@
-import Instrument from './instrument';
-import Player from './player';
+const Instrument = require('./instrument');
+const Player = require('./player');
 
 /** Lists of possible notes and octaves for soundfonts. */
 const getNotes = () => [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', ];

@@ -1,4 +1,4 @@
-import { NativeModules, } from 'react-native';
+const { NativeModules, } = require('react-native');
 const { SoundPool, } = NativeModules;
 
 /** Manages the loading, playing, releasing of related sound resources. */
@@ -55,8 +55,8 @@ class Instrument {
             // Promises are used to eleminate the race of calling
             // prepare while sound is already loading, but not yet loaded
             let promise;
-            if (note in this.sounds) {
-                promise = this.sounds[note];
+            if (note in this.soundPromises) {
+                promise = this.soundPromises[note];
             }
             else {
                 promise = SoundPool.load(`${this.name}_${note}`);
@@ -67,6 +67,7 @@ class Instrument {
                 this.sounds[note] = sound;
                 delete this.soundPromises[note];
                 //}
+                console.debug("Loaded", note);
             });
             promise.catch(e => {
                 // failedNotes are never removed from soundPromises,
@@ -92,26 +93,42 @@ class Instrument {
      *     or `null` if all notes couldn't be played
      */
     play(notes, speed, gain, callback) {
-        if (__DEV__) {
-            if (!Array.isArray(notes)) throw new TypeError('play(): notes must be array');
-            if (typeof notes[0] !== 'string') throw new TypeError('play(): notes must contain strings');
-            if (typeof speed !== 'number' || typeof gain !== 'number') throw new TypeError('play(): speed, gain must be numbers');
-            const notInRange = (val, min, max) => {
-                return (val < min || val > max);
-            };
-            if (notInRange(speed, 0.5, 2.0) || notInRange(gain, 0.0, 1.0)) {
-                throw new RangeError();
+        try {
+            if (__DEV__) {
+                if (!Array.isArray(notes) || typeof notes[0] !== 'string') {
+                    throw new TypeError('notes must be array of note names');
+                }
+                if (typeof speed !== 'number' || typeof gain !== 'number') {
+                    throw new TypeError('speed and gain must be numbers');
+                }
+                const notInRange = (val, min, max) => {
+                    return (val < min || val > max);
+                };
+                if (notInRange(speed, 0.5, 2.0) || notInRange(gain, 0.0, 1.0)) {
+                    throw new RangeError('speed or gain');
+                }
             }
-        }
 
-        let sounds = notes.map(note => this.sounds[note.toLowerCase()]);
-        let promise = SoundPool.playSync(sounds, 0, speed, gain);
-        promise.then(callback);
-        promise.catch(e => {
+            let sounds = [];
+            for (let note of notes) {
+                let sound = this.sounds[note];
+                if (!sound) {
+                    console.warn(`Attempt to play unloaded ${note}`);
+                    break;
+                }
+                sounds.push(sound);
+            }
+            let promise = SoundPool.playSync(sounds, 0, speed, gain)
+                .then(callback)
+                .catch(e => {
+                    console.warn('Failed to play ' + notes);
+                    console.debug(e);
+                });
+        }
+        catch (e) {
             callback(null);
-            console.error('Failed to play', notes);
-            console.debug(e);
-        });
+            console.error('Instrument', e);
+        }
     }
 
     /**
