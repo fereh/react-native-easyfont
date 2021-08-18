@@ -2,13 +2,8 @@
   "name": "react-native-easyfont",
   "title": "React Native Easyfont",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Fork of react-native-soundfont with various changes.",
   "main": "index.js",
-  "files": [
-    "README.md",
-    "android",
-    "index.js"
-  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -34,8 +29,5 @@
   "devDependencies": {
     "react": "^16.9.0",
     "react-native": "^0.61.5"
-  },
-  "dependencies": {
-    "src": "link:../"
   }
 }

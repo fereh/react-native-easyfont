@@ -1,4 +1,4 @@
-const Instrument = require('./instrument');
+import Instrument from './instrument';
 
 const defaultOptions = Object.freeze({
     duration: 3000,

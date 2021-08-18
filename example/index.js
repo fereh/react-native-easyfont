@@ -4,7 +4,7 @@ import { name as appName } from './app.json';
 
 import { instrument, player, generatePitchList, } from 'react-native-easyfont';
 
-console.log('break');
+console.log(generatePitchList(3, 4));
 let piano = instrument('acoustic_grand_piano');
 
 

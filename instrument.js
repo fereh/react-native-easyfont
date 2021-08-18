@@ -1,4 +1,4 @@
-const { NativeModules, } = require('react-native');
+import { NativeModules, } from 'react-native';
 const { SoundPool, } = NativeModules;
 
 /** Manages the loading, playing, releasing of related sound resources. */
