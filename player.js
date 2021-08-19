@@ -1,5 +1,6 @@
 const Instrument = require('./instrument');
 
+// TODO: jsdoc these options
 const defaultOptions = Object.freeze({
     duration: 3000,
     release: 300,
@@ -7,43 +8,32 @@ const defaultOptions = Object.freeze({
     gain: 1.0,
 });
 
-/** Manages the playback of a specified set of notes. */
+/** Manages the playback notes in an instrument. */
 class Player {
 
     /**
-     * @param instrument {Instrument or String} - the instrument to play from
+     * @param instrument {Instrument|string} - The instrument to play from
      * @param options {Object}
      */
     constructor(instrument, options) {
-        // TODO: decide how much sanity checking to do
-        this.instrument = typeof instrument === 'string'
-            ? new Instrument(instrument)
-            : instrument;
-
-        this.options = defaultOptions;
-        if (typeof options === 'object') {
-            this.setOptions(options);
+        this.instrument = instrument;
+        if (typeof instrument === 'string') {
+            this.instrument = new Instrument(instruent);
         }
-
+        this.options = defaultOptions;
+        this.config(options);
         this.sequence = new Sequence();
-
         this.activeStreams = [];
     }
 
-    setOptions(options) {
-        const setRange = (val, min, max) => {
-            return ((val < min) && min) || ((val > max) && max) || val;
-        };
-        options = { ...this.options, ...options };
-        options.speed = setRange(options.speed, 0.5, 2.0);
-        options.gain = setRange(options.gain, 0.0, 1.0);
-        this.options = options;
+    config(options) {
+        this.options = { ...this.options, ...options, };
         return this;
     }
 
     /**
-     * Convenience wrapper for Instrument.prepare
-     * @param {Array or String} - note or notes to prepare
+     * Convenience wrapper for {Instrument.prepare}
+     * @param {string[]|string} notes
      */
     prepare(notes) {
         if (typeof notes === 'string') {
@@ -51,45 +41,67 @@ class Player {
         }
         return new Promise((resolve, reject) => {
             this.instrument.prepare(notes, failedNotes => {
-                if (failedNotes) {
-                    reject(failedNotes);
-                }
+                if (failedNotes) reject();
                 else resolve(this);
             });
         });
+        return this;
     }
 
     /**
-     * @param notes {Array or String} - note or notes to play
-     * @param when {Number} - when on timeline to play
+     * @param notes {string[]|string} notes
+     * @param {number} when - When on timeline to play note(s); millisecond precision.
      *   Timeline starts on first `play()`, and ends after all notes finish playing.
      */
     play(notes, when) {
+        // TODO: play silence before/after sounds?
         this.sequence.start(() => {
             this.instrument.play(notes, this.options.speed, this.options.gain, streams => {
                 this.activeStreams.push(streams);
                 this.sequence.stop(() => {
+                    // TODO: run release envelop, then stop
                     this.instrument.stop(streams);
+
                     let i = this.activeStreams.findIndex(x => x === streams[0]);
                     this.activeStreams.slice(i, i + streams.length - 1);
                 }, this.options.duration);
             });
         }, when);
+        return this;
     }
 
+    /**
+     * Stop all playing notes.
+     */
     stop() {
         this.instrument.stop(this.activeStreams);
+        return this;
     }
+
+    /**
+     * Pause all playing notes.
+     */
     pause() {
-        // not using autoPause() because other Players could be using the instrument
+        // pauseAll() will break other players of same instrument,
+        // so pause streams individually
         this.instrument.pause(this.activeStreams);
+        return this;
     }
+
+    /**
+     * Resume all paused notes.
+     */
     resume() {
         this.instrument.resume(this.activeStreams);
+        return this;
     }
+
 }
 
-/** Controls timing of notes being played via the Player. */
+/**
+ * @private
+ * Controls timing of notes being played via the Player.
+ */
 class Sequence {
     constructor() {
         this.ts = null;
