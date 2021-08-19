@@ -28,11 +28,11 @@
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {
-    "react": ">=16.8.1",
+    "react": ">=17.0.2",
     "react-native": "^0.65.0"
   },
   "devDependencies": {
-    "react": "^16.9.0",
+    "react": "^17.0.2",
     "react-native": "0.65.0"
   },
   "private": false
