@@ -140,7 +140,7 @@ Manages the playback notes in an instrument.
 
 * [Player](#Player)
     * [new Player(instrument, options)](#new_Player_new)
-    * [.prepare(notes)](#Player+prepare)
+    * [.prepare(notes)](#Player+prepare) ⇒ [<code>Promise.&lt;Player&gt;</code>](#Player)
     * [.play(notes, when)](#Player+play)
     * [.stop()](#Player+stop)
     * [.pause()](#Player+pause)
@@ -157,7 +157,7 @@ Manages the playback notes in an instrument.
 
 <a name="Player+prepare"></a>
 
-### player.prepare(notes)
+### player.prepare(notes) ⇒ [<code>Promise.&lt;Player&gt;</code>](#Player)
 Convenience promise wrapper for [Instrument](#Instrument)'s `prepare`.
 
 **Kind**: instance method of [<code>Player</code>](#Player)  

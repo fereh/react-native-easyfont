@@ -34,6 +34,7 @@ class Player {
     /**
      * Convenience promise wrapper for {@link Instrument}'s `prepare`.
      * @param {string[]|string} notes
+     * @return {Promise<Player>}
      */
     prepare(notes) {
         if (typeof notes === 'string') {
