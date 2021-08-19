@@ -4,17 +4,14 @@ const { SoundPool, } = NativeModules;
 const range = (v, n, x) => ((v < n) && n) || ((v > x) && x) || v;
 
 /**
- * Abstract: Collection of related 'soundfonts'
- * Frontend for SoundPool with safety checks and convenience features.
+ * Abstract collection of related 'soundfonts'.
+ * Frontend for Android's `SoundPool` with safety checks and convenience features.
  */
 class Instrument {
 
     /**
      * @param {string} name - An instrument name (see example)
      * @param {number} [maxStreams] - Number of sounds able to play simultainiously
-     * @example
-     *   Instrument of name 'violin', preparing note 'A0' will map to resource 'raw/violin_a0.mp3';
-     *   note 'C4' to 'raw/violin_c4.mp3', etc..
      */
     constructor(name, maxStreams) {
         this.name = name;
@@ -32,7 +29,7 @@ class Instrument {
 
     /**
      * @callback prepareCallback
-     * @param {number[]} failedNotes - `null` on success, or list of note that failed to load
+     * @param {number[]} failedNotes - `null` on success, or list of notes that failed to load
      */
 
     /**
@@ -90,6 +87,7 @@ class Instrument {
             });
         }
     }
+
 
     /**
      * @callback playCallback

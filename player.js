@@ -32,7 +32,7 @@ class Player {
     }
 
     /**
-     * Convenience wrapper for {Instrument.prepare}
+     * Convenience promise wrapper for {@link Instrument}'s `prepare`.
      * @param {string[]|string} notes
      */
     prepare(notes) {

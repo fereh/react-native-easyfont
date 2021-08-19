@@ -2,8 +2,8 @@
 
 <dl>
 <dt><a href="#Instrument">Instrument</a></dt>
-<dd><p>Abstract: Collection of related &#39;soundfonts&#39;
-Frontend for SoundPool with safety checks and convenience features.</p>
+<dd><p>Abstract collection of related &#39;soundfonts&#39;.
+Frontend for Android&#39;s <code>SoundPool</code> with safety checks and convenience features.</p>
 </dd>
 <dt><a href="#Player">Player</a></dt>
 <dd><p>Manages the playback notes in an instrument.</p>
@@ -23,10 +23,10 @@ Frontend for SoundPool with safety checks and convenience features.</p>
 <dd><p>Generate list of notes in Scientific Pitch Notation, by octave.</p>
 </dd>
 <dt><a href="#instrument">instrument()</a></dt>
-<dd><p>Factory wrapper for Instrument</p>
+<dd><p>Factory wrapper for <a href="#Instrument">Instrument</a></p>
 </dd>
 <dt><a href="#player">player()</a></dt>
-<dd><p>Factory wrapper for Player</p>
+<dd><p>Factory wrapper for <a href="#Player">Player</a></p>
 </dd>
 </dl>
 
@@ -42,8 +42,8 @@ Frontend for SoundPool with safety checks and convenience features.</p>
 <a name="Instrument"></a>
 
 ## Instrument
-Abstract: Collection of related 'soundfonts'
-Frontend for SoundPool with safety checks and convenience features.
+Abstract collection of related 'soundfonts'.
+Frontend for Android's `SoundPool` with safety checks and convenience features.
 
 **Kind**: global class  
 
@@ -66,11 +66,6 @@ Frontend for SoundPool with safety checks and convenience features.
 | name | <code>string</code> | An instrument name (see example) |
 | [maxStreams] | <code>number</code> | Number of sounds able to play simultainiously |
 
-**Example**  
-```js
-Instrument of name 'violin', preparing note 'A0' will map to resource 'raw/violin_a0.mp3';
-  note 'C4' to 'raw/violin_c4.mp3', etc..
-```
 <a name="Instrument+prepare"></a>
 
 ### instrument.prepare(notes, callback)
@@ -163,7 +158,7 @@ Manages the playback notes in an instrument.
 <a name="Player+prepare"></a>
 
 ### player.prepare(notes)
-Convenience wrapper for {Instrument.prepare}
+Convenience promise wrapper for [Instrument](#Instrument)'s `prepare`.
 
 **Kind**: instance method of [<code>Player</code>](#Player)  
 
@@ -220,13 +215,13 @@ Generate list of notes in Scientific Pitch Notation, by octave.
 <a name="instrument"></a>
 
 ## instrument()
-Factory wrapper for Instrument
+Factory wrapper for [Instrument](#Instrument)
 
 **Kind**: global function  
 <a name="player"></a>
 
 ## player()
-Factory wrapper for Player
+Factory wrapper for [Player](#Player)
 
 **Kind**: global function  
 <a name="prepareCallback"></a>
@@ -236,7 +231,7 @@ Factory wrapper for Player
 
 | Param | Type | Description |
 | --- | --- | --- |
-| failedNotes | <code>Array.&lt;number&gt;</code> | `null` on success, or list of note that failed to load |
+| failedNotes | <code>Array.&lt;number&gt;</code> | `null` on success, or list of notes that failed to load |
 
 <a name="playCallback"></a>
 

@@ -28,10 +28,10 @@ generatePitchList = (...octaves) => {
     return res;
 };
 
-/** Factory wrapper for Instrument */
+/** Factory wrapper for {@link Instrument} */
 instrument = (name) => new Instrument(name);
 
-/** Factory wrapper for Player */
+/** Factory wrapper for {@link Player} */
 player = (instrument, options) => new Player(instrument, options);
 
 module.exports = {
