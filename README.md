@@ -32,7 +32,7 @@ You will have to recompile your React Native project, because this module contai
 ```javascript
 import { player, generatePitchList, } from 'react-native-easyfont';
 
-player('acoustic_grand_piano').prepare(generatePitchList(4)).then(player => {
+player('acoustic_grand_piano').prepare(generatePitchList(5, 6)).then(player => {
     player.play([ 'c5', 'e5', 'g5', ]);
     player.play([ 'c5', 'f5', 'a5', ], 1000);
     player.play([ 'd5', 'f5', 'b5', ], 2000);
@@ -53,9 +53,9 @@ const violinReady = violinPlayer.prepare(notes);
 // Whenever the notes are to be played:
 violinReady.then(() => {
     violinPlayer.stop(); // stop player playback
-    violinPlayer.play(note[0]);
-    violinPlayer.play([ note[1], note[2], ], 3000);
-    violinPlayer.play(note[3], 3500);
+    violinPlayer.play(notes[0]);
+    violinPlayer.play([ notes[1], notes[2], ], 3000);
+    violinPlayer.play(notes[3], 3500);
 }); 
 ```
 
